@@ -1,13 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Vibração Positiva Premium | 58 Frases Exclusivas</title>
+    <title>Vibração Positiva Premium | Mais de 150 Frases Exclusivas</title>
+    
+    <!-- ===== PREVENÇÃO DE CACHE (NO-CACHE) ===== -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     
     <!-- ===== PWA CONFIGURAÇÃO ===== -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json?v=2">
     <meta name="theme-color" content="#9b51e0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -128,7 +132,7 @@
         .app-subtitle { font-size: 0.85rem; opacity: 0.85; font-weight: 300; margin-bottom: 8px; }
 
         .widget-row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 5px; position: relative; }
-        .top-time { font-size: 1.1rem; font-weight: 600; background: rgba(255, 255, 255, 0.2); padding: 4px 12px; border-radius: 20px; }
+        .top-time { font-size: 1rem; font-weight: 600; background: rgba(255, 255, 255, 0.2); padding: 4px 12px; border-radius: 20px; display: flex; align-items: center; gap: 8px; }
         .theme-toggle { background: rgba(255, 255, 255, 0.2); border: none; color: white; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
 
         .level-badge { font-size: 0.75rem; font-weight: 700; background: rgba(255,255,255,0.25); padding: 3px 10px; border-radius: 12px; margin-bottom: 5px; display: inline-block; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -573,6 +577,9 @@
         .avatar-option.selected { border-color: var(--primary); background: rgba(var(--primary-rgb), 0.1); }
         .sleep-timer-control { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; }
         .sleep-timer-control select { padding: 6px 12px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--light-bg); color: var(--text-dark); font-family: inherit; }
+
+        /* Botão de compartilhar app */
+        .share-app-btn { background: rgba(255, 255, 255, 0.2); border: none; color: white; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
     </style>
 </head>
 <body data-theme="light">
@@ -597,7 +604,12 @@
         <p class="app-subtitle">O seu refúgio diário de evolução e luz</p>
         
         <div class="widget-row">
-            <div class="top-time" id="relogio">00:00</div>
+            <div class="top-time">
+                <i class="far fa-clock"></i> <span id="relogio">00:00</span>
+                <span style="margin-left: 8px;">|</span>
+                <i class="fas fa-thermometer-half"></i> <span id="temperatura">--°C</span>
+            </div>
+            <button class="share-app-btn" onclick="compartilharApp()" title="Compartilhar App"><i class="fas fa-share-alt"></i></button>
             <button class="theme-toggle" onclick="toggleThemeMenu()" title="Mudar Paleta/Tema"><i class="fas fa-palette"></i></button>
             <button class="theme-toggle" onclick="toggleTheme()" title="Modo Escuro"><i class="fas fa-moon" id="theme-icon"></i></button>
             
@@ -907,36 +919,6 @@
 
     <div id="toast">Frase copiada! 📋</div>
 
-    <button id="btn-crise" onclick="ativarModoCrise()" style="
-        position:fixed;
-        right:20px;
-        bottom:130px;
-        z-index:999;
-        background:#e74c3c;
-        color:white;
-        border:none;
-        border-radius:50px;
-        padding:14px 18px;
-        font-weight:700;
-        box-shadow:0 8px 20px rgba(0,0,0,0.2);
-        cursor:pointer;
-    ">😔 Não estou bem</button>
-
-    <button id="btn-sono" onclick="ativarModoSono()" style="
-        position:fixed;
-        left:20px;
-        bottom:130px;
-        z-index:999;
-        background:#2c3e50;
-        color:white;
-        border:none;
-        border-radius:50px;
-        padding:14px 18px;
-        font-weight:700;
-        box-shadow:0 8px 20px rgba(0,0,0,0.2);
-        cursor:pointer;
-    ">🌙 Modo Dormir</button>
-
     <!-- MODAL DE EDIÇÃO -->
     <div class="modal-overlay" id="modal-edit-grat">
         <div class="modal-box">
@@ -951,10 +933,10 @@
 
     <script>
         // ==============================================
-        // BANCO DE FRASES ATUALIZADO: 58 FRASES NO TOTAL
+        // BANCO DE FRASES ATUALIZADO: 150+ FRASES
         // ==============================================
         const bancoFrases = [
-            // MOTIVAÇÃO (10)
+            // ==================== MOTIVAÇÃO (25) ====================
             { id: 1, cat: "motivacao", text: "A sua mente tem o poder de transformar a sua realidade. Foque no bem.", auth: "Vibração Positiva" },
             { id: 2, cat: "motivacao", text: "Grandes transformações começam com pequenas mudanças diárias de atitude.", auth: "Monge da Luz" },
             { id: 3, cat: "motivacao", text: "O sucesso é a soma de pequenos esforços repetidos dia após dia.", auth: "Robert Collier" },
@@ -965,64 +947,126 @@
             { id: 8, cat: "motivacao", text: "Não espere por oportunidades. Crie você mesmo o seu caminho.", auth: "George Bernard Shaw" },
             { id: 9, cat: "motivacao", text: "A persistência é o caminho do êxito. Nunca desista, pois a vitória está logo ali.", auth: "Charles Chaplin" },
             { id: 10, cat: "motivacao", text: "Levante-se, sacuda a poeira e dê a volta por cima. A vida espera por você.", auth: "Desconhecido" },
+            { id: 11, cat: "motivacao", text: "O único limite para a sua realização é a sua própria mente.", auth: "Vibração Positiva" },
+            { id: 12, cat: "motivacao", text: "A jornada de mil milhas começa com um único passo. Dê o primeiro hoje.", auth: "Lao Tsé" },
+            { id: 13, cat: "motivacao", text: "Motivação é o que te faz começar. Hábito é o que te faz continuar.", auth: "Jim Ryun" },
+            { id: 14, cat: "motivacao", text: "Tudo o que você sempre quis está do outro lado do medo.", auth: "George Addair" },
+            { id: 15, cat: "motivacao", text: "Você não precisa ser extremo, apenas consistente. O resultado virá.", auth: "Vibração Positiva" },
+            { id: 16, cat: "motivacao", text: "Acredite que você pode e você já está no meio do caminho.", auth: "Theodore Roosevelt" },
+            { id: 17, cat: "motivacao", text: "Sonhe grande, comece pequeno, mas acima de tudo, comece.", auth: "Simon Sinek" },
+            { id: 18, cat: "motivacao", text: "O fracasso é apenas a oportunidade de começar de novo com mais inteligência.", auth: "Henry Ford" },
+            { id: 19, cat: "motivacao", text: "A diferença entre quem você é e quem quer ser está no que você faz.", auth: "Vibração Positiva" },
+            { id: 20, cat: "motivacao", text: "Viva cada dia como se fosse o último, aprenda como se fosse viver para sempre.", auth: "Mahatma Gandhi" },
+            { id: 21, cat: "motivacao", text: "Faça hoje o que os outros não querem, amanhã você viverá como os outros não podem.", auth: "Will Smith" },
+            { id: 22, cat: "motivacao", text: "Sua única competição é você mesmo ontem. Melhore 1% a cada dia.", auth: "Vibração Positiva" },
+            { id: 23, cat: "motivacao", text: "O otimismo é a fé que leva à realização. Nada pode ser feito sem esperança.", auth: "Helen Keller" },
+            { id: 24, cat: "motivacao", text: "Quando você quer algo, todo o universo conspira para que você realize.", auth: "Paulo Coelho" },
+            { id: 25, cat: "motivacao", text: "Se você não está disposto a arriscar, esteja disposto a uma vida comum.", auth: "Jim Rohn" },
             
-            // FOCO (10)
-            { id: 11, cat: "foco", text: "Energia concentrada produz resultados extraordinários. Elimine as distrações.", auth: "Foco Pleno" },
-            { id: 12, cat: "foco", text: "Dizer não ao supérfluo é dizer sim aos seus maiores e mais nobres sonhos.", auth: "Sucesso Consciente" },
-            { id: 13, cat: "foco", text: "Onde está sua atenção, está sua energia. Direcione seu foco para o que realmente importa.", auth: "Tony Robbins" },
-            { id: 14, cat: "foco", text: "A mente focada é uma fonte inesgotável de poder criativo.", auth: "Vibração Positiva" },
-            { id: 15, cat: "foco", text: "Faça uma coisa de cada vez, com toda a sua alma, e você verá milagres acontecerem.", auth: "Provérbio Oriental" },
-            { id: 16, cat: "foco", text: "Concentre-se no momento presente. O agora é onde a vida realmente acontece.", auth: "Eckhart Tolle" },
-            { id: 17, cat: "foco", text: "Manter o foco é mais importante que o talento. A disciplina vence a inteligência.", auth: "Vibração Positiva" },
-            { id: 18, cat: "foco", text: "Se você não pode voar, corra. Se não pode correr, ande. Se não pode andar, rasteje. Mas continue em frente.", auth: "Martin Luther King" },
-            { id: 19, cat: "foco", text: "Não deixe que o barulho das opiniões dos outros abafe a sua própria voz interior.", auth: "Steve Jobs" },
-            { id: 20, cat: "foco", text: "A excelência nunca é um acidente. É o resultado da intenção, esforço e foco elevado.", auth: "Aristóteles" },
+            // ==================== FOCO (15) ====================
+            { id: 26, cat: "foco", text: "Energia concentrada produz resultados extraordinários. Elimine as distrações.", auth: "Foco Pleno" },
+            { id: 27, cat: "foco", text: "Dizer não ao supérfluo é dizer sim aos seus maiores e mais nobres sonhos.", auth: "Sucesso Consciente" },
+            { id: 28, cat: "foco", text: "Onde está sua atenção, está sua energia. Direcione seu foco para o que realmente importa.", auth: "Tony Robbins" },
+            { id: 29, cat: "foco", text: "A mente focada é uma fonte inesgotável de poder criativo.", auth: "Vibração Positiva" },
+            { id: 30, cat: "foco", text: "Faça uma coisa de cada vez, com toda a sua alma, e você verá milagres acontecerem.", auth: "Provérbio Oriental" },
+            { id: 31, cat: "foco", text: "Concentre-se no momento presente. O agora é onde a vida realmente acontece.", auth: "Eckhart Tolle" },
+            { id: 32, cat: "foco", text: "Manter o foco é mais importante que o talento. A disciplina vence a inteligência.", auth: "Vibração Positiva" },
+            { id: 33, cat: "foco", text: "Se você não pode voar, corra. Se não pode correr, ande. Se não pode andar, rasteje. Mas continue em frente.", auth: "Martin Luther King" },
+            { id: 34, cat: "foco", text: "Não deixe que o barulho das opiniões dos outros abafe a sua própria voz interior.", auth: "Steve Jobs" },
+            { id: 35, cat: "foco", text: "A excelência nunca é um acidente. É o resultado da intenção, esforço e foco elevado.", auth: "Aristóteles" },
+            { id: 36, cat: "foco", text: "O foco não é sobre o que você quer fazer, mas sobre o que você está disposto a abandonar.", auth: "Vibração Positiva" },
+            { id: 37, cat: "foco", text: "A disciplina é a ponte entre metas e realizações.", auth: "Jim Rohn" },
+            { id: 38, cat: "foco", text: "Trabalhe em silêncio, deixe que o sucesso faça o barulho.", auth: "Frank Ocean" },
+            { id: 39, cat: "foco", text: "A multitarefa é uma ilusão. Priorize e execute com foco total.", auth: "Vibração Positiva" },
+            { id: 40, cat: "foco", text: "Concentre-se em ficar melhor, não em ficar diferente. A melhoria contínua gera maestria.", auth: "Vibração Positiva" },
             
-            // ANSIEDADE (10)
-            { id: 21, cat: "ansiedade", text: "Não antecipe os problemas do amanhã. O único momento que você controla é o agora.", auth: "Mestre Zen" },
-            { id: 22, cat: "ansiedade", text: "Sua respiração é sua âncora. Quando tudo parecer caótico, volte para ela.", auth: "Terapia da Mente" },
-            { id: 23, cat: "ansiedade", text: "A ansiedade é como uma cadeira de balanço: dá o que fazer, mas não te leva a lugar nenhum.", auth: "J. Powell" },
-            { id: 24, cat: "ansiedade", text: "Você não precisa resolver tudo hoje. Dê a si mesmo a permissão para descansar.", auth: "Vibração Positiva" },
-            { id: 25, cat: "ansiedade", text: "Acalme sua mente, e o resto do seu corpo seguirá o ritmo da paz.", auth: "Sabedoria Milenar" },
-            { id: 26, cat: "ansiedade", text: "Se preocupe menos com o que pode dar errado e foque mais no que pode dar certo.", auth: "Vibração Positiva" },
-            { id: 27, cat: "ansiedade", text: "A paz não é a ausência de conflitos, mas a capacidade de lidar com eles com serenidade.", auth: "Desconhecido" },
-            { id: 28, cat: "ansiedade", text: "Respire fundo. Isso também vai passar, como todas as tempestades da vida.", auth: "Vibração Positiva" },
-            { id: 29, cat: "ansiedade", text: "Você não pode controlar o vento, mas pode sempre ajustar as velas do seu barco.", auth: "Estoicismo" },
-            { id: 30, cat: "ansiedade", text: "Permita-se sentir, mas não se afogue. Você é mais forte do que suas emoções.", auth: "Autocuidado" },
+            // ==================== ANSIEDADE (15) ====================
+            { id: 41, cat: "ansiedade", text: "Não antecipe os problemas do amanhã. O único momento que você controla é o agora.", auth: "Mestre Zen" },
+            { id: 42, cat: "ansiedade", text: "Sua respiração é sua âncora. Quando tudo parecer caótico, volte para ela.", auth: "Terapia da Mente" },
+            { id: 43, cat: "ansiedade", text: "A ansiedade é como uma cadeira de balanço: dá o que fazer, mas não te leva a lugar nenhum.", auth: "J. Powell" },
+            { id: 44, cat: "ansiedade", text: "Você não precisa resolver tudo hoje. Dê a si mesmo a permissão para descansar.", auth: "Vibração Positiva" },
+            { id: 45, cat: "ansiedade", text: "Acalme sua mente, e o resto do seu corpo seguirá o ritmo da paz.", auth: "Sabedoria Milenar" },
+            { id: 46, cat: "ansiedade", text: "Se preocupe menos com o que pode dar errado e foque mais no que pode dar certo.", auth: "Vibração Positiva" },
+            { id: 47, cat: "ansiedade", text: "A paz não é a ausência de conflitos, mas a capacidade de lidar com eles com serenidade.", auth: "Desconhecido" },
+            { id: 48, cat: "ansiedade", text: "Respire fundo. Isso também vai passar, como todas as tempestades da vida.", auth: "Vibração Positiva" },
+            { id: 49, cat: "ansiedade", text: "Você não pode controlar o vento, mas pode sempre ajustar as velas do seu barco.", auth: "Estoicismo" },
+            { id: 50, cat: "ansiedade", text: "Permita-se sentir, mas não se afogue. Você é mais forte do que suas emoções.", auth: "Autocuidado" },
+            { id: 51, cat: "ansiedade", text: "A calma é uma superpoderosa. Cultive-a diariamente com pequenas pausas.", auth: "Vibração Positiva" },
+            { id: 52, cat: "ansiedade", text: "Se a ansiedade te visita, agradeça por ela querer te proteger e depois a liberte.", auth: "Mindfulness" },
+            { id: 53, cat: "ansiedade", text: "O medo é o caminho para o lado sombrio. O medo leva à raiva... Controle sua respiração.", auth: "Yoda" },
+            { id: 54, cat: "ansiedade", text: "Aceite o que é, deixe o que foi e tenha fé no que será.", auth: "Provérbio Zen" },
+            { id: 55, cat: "ansiedade", text: "Não lute contra o pensamento. Observe-o como uma nuvem no céu e deixe-o passar.", auth: "Vibração Positiva" },
             
-            // DEUS / ESPIRITUALIDADE (10)
-            { id: 31, cat: "motivacao", text: "Deus nunca coloca um fardo em seus ombros sem lhe dar a força para carregá-lo.", auth: "Bíblia Sagrada" },
-            { id: 32, cat: "motivacao", text: "Confie no plano divino. Mesmo nas dificuldades, Deus está preparando algo grandioso.", auth: "Fé Inabalável" },
-            { id: 33, cat: "motivacao", text: "A oração é a chave do dia e a fechadura da noite. Conecte-se com o divino.", auth: "Sabedoria Cristã" },
-            { id: 34, cat: "motivacao", text: "O amor de Deus é como um oceano infinito. Mergulhe sem medo.", auth: "Vibração Positiva" },
-            { id: 35, cat: "motivacao", text: "Se Deus é por nós, quem será contra nós? Siga com fé e coragem.", auth: "Apóstolo Paulo" },
-            { id: 36, cat: "motivacao", text: "Agradeça a Deus pelo que você tem, e Ele abrirá portas para o que lhe falta.", auth: "Provérbio Religioso" },
-            { id: 37, cat: "motivacao", text: "A verdadeira paz vem de saber que Deus está no controle de todas as coisas.", auth: "Vibração Positiva" },
-            { id: 38, cat: "motivacao", text: "Entregue suas ansiedades a Deus, pois Ele cuida de você com amor infinito.", auth: "1 Pedro 5:7" },
-            { id: 39, cat: "motivacao", text: "A luz de Deus brilha dentro de você. Ilumine o mundo com sua bondade.", auth: "Mensagem Espiritual" },
-            { id: 40, cat: "motivacao", text: "Com Deus, um minuto é suficiente para mudar toda uma vida. Tenha fé.", auth: "Testemunho de Fé" },
+            // ==================== DEUS / ESPIRITUALIDADE (15) ====================
+            { id: 56, cat: "motivacao", text: "Deus nunca coloca um fardo em seus ombros sem lhe dar a força para carregá-lo.", auth: "Bíblia Sagrada" },
+            { id: 57, cat: "motivacao", text: "Confie no plano divino. Mesmo nas dificuldades, Deus está preparando algo grandioso.", auth: "Fé Inabalável" },
+            { id: 58, cat: "motivacao", text: "A oração é a chave do dia e a fechadura da noite. Conecte-se com o divino.", auth: "Sabedoria Cristã" },
+            { id: 59, cat: "motivacao", text: "O amor de Deus é como um oceano infinito. Mergulhe sem medo.", auth: "Vibração Positiva" },
+            { id: 60, cat: "motivacao", text: "Se Deus é por nós, quem será contra nós? Siga com fé e coragem.", auth: "Apóstolo Paulo" },
+            { id: 61, cat: "motivacao", text: "Agradeça a Deus pelo que você tem, e Ele abrirá portas para o que lhe falta.", auth: "Provérbio Religioso" },
+            { id: 62, cat: "motivacao", text: "A verdadeira paz vem de saber que Deus está no controle de todas as coisas.", auth: "Vibração Positiva" },
+            { id: 63, cat: "motivacao", text: "Entregue suas ansiedades a Deus, pois Ele cuida de você com amor infinito.", auth: "1 Pedro 5:7" },
+            { id: 64, cat: "motivacao", text: "A luz de Deus brilha dentro de você. Ilumine o mundo com sua bondade.", auth: "Mensagem Espiritual" },
+            { id: 65, cat: "motivacao", text: "Com Deus, um minuto é suficiente para mudar toda uma vida. Tenha fé.", auth: "Testemunho de Fé" },
+            { id: 66, cat: "motivacao", text: "Deus não te chamou para uma vida perfeita, mas para uma vida com propósito.", auth: "Rick Warren" },
+            { id: 67, cat: "motivacao", text: "A fé é a certeza das coisas que se esperam, a prova das coisas que não se veem.", auth: "Hebreus 11:1" },
+            { id: 68, cat: "motivacao", text: "Deus é o teu refúgio e fortaleza, socorro bem presente na angústia.", auth: "Salmos 46:1" },
+            { id: 69, cat: "motivacao", text: "Deus escreve certo por linhas tortas. Confie no processo.", auth: "Sabedoria Popular" },
+            { id: 70, cat: "motivacao", text: "A maior prova de amor que Deus te dá é o livre arbítrio. Use-o para o bem.", auth: "Vibração Positiva" },
             
-            // ESTOICISMO (10)
-            { id: 41, cat: "foco", text: "A felicidade da sua vida depende da qualidade dos seus pensamentos.", auth: "Marco Aurélio" },
-            { id: 42, cat: "foco", text: "Você tem poder sobre sua mente – não sobre eventos externos. Perceba isso e encontrará força.", auth: "Sêneca" },
-            { id: 43, cat: "foco", text: "Não é o que acontece com você, mas como você reage que importa.", auth: "Epiteto" },
-            { id: 44, cat: "ansiedade", text: "A alma se adapta aos obstáculos, transformando-os em degraus para a virtude.", auth: "Marco Aurélio" },
-            { id: 45, cat: "ansiedade", text: "A dificuldade é o que desperta o gênio. Os obstáculos são o caminho.", auth: "Ryan Holiday" },
-            { id: 46, cat: "motivacao", text: "Aja de acordo com a natureza. Viva de forma simples, mas com propósito elevado.", auth: "Zenão de Cítio" },
-            { id: 47, cat: "foco", text: "O sábio não sofre por aquilo que não pode controlar. Ele aceita e avança.", auth: "Sêneca" },
-            { id: 48, cat: "ansiedade", text: "Pare de se preocupar com a opinião alheia. A aprovação dos outros não vale sua paz.", auth: "Epiteto" },
-            { id: 49, cat: "motivacao", text: "A vida é curta. Use cada momento como se fosse o último, com virtude e ação.", auth: "Marco Aurélio" },
-            { id: 50, cat: "foco", text: "A maior batalha é contra os próprios pensamentos. Vença a si mesmo e vencerá o mundo.", auth: "Sêneca" },
+            // ==================== ESTOICISMO (15) ====================
+            { id: 71, cat: "foco", text: "A felicidade da sua vida depende da qualidade dos seus pensamentos.", auth: "Marco Aurélio" },
+            { id: 72, cat: "foco", text: "Você tem poder sobre sua mente – não sobre eventos externos. Perceba isso e encontrará força.", auth: "Sêneca" },
+            { id: 73, cat: "foco", text: "Não é o que acontece com você, mas como você reage que importa.", auth: "Epiteto" },
+            { id: 74, cat: "ansiedade", text: "A alma se adapta aos obstáculos, transformando-os em degraus para a virtude.", auth: "Marco Aurélio" },
+            { id: 75, cat: "ansiedade", text: "A dificuldade é o que desperta o gênio. Os obstáculos são o caminho.", auth: "Ryan Holiday" },
+            { id: 76, cat: "motivacao", text: "Aja de acordo com a natureza. Viva de forma simples, mas com propósito elevado.", auth: "Zenão de Cítio" },
+            { id: 77, cat: "foco", text: "O sábio não sofre por aquilo que não pode controlar. Ele aceita e avança.", auth: "Sêneca" },
+            { id: 78, cat: "ansiedade", text: "Pare de se preocupar com a opinião alheia. A aprovação dos outros não vale sua paz.", auth: "Epiteto" },
+            { id: 79, cat: "motivacao", text: "A vida é curta. Use cada momento como se fosse o último, com virtude e ação.", auth: "Marco Aurélio" },
+            { id: 80, cat: "foco", text: "A maior batalha é contra os próprios pensamentos. Vença a si mesmo e vencerá o mundo.", auth: "Sêneca" },
+            { id: 81, cat: "foco", text: "O sofrimento é uma questão de escolha. Você sofre mais na imaginação do que na realidade.", auth: "Sêneca" },
+            { id: 82, cat: "ansiedade", text: "A sorte é o que acontece quando a preparação encontra a oportunidade.", auth: "Sêneca" },
+            { id: 83, cat: "motivacao", text: "A melhor vingança é não ser como seu inimigo.", auth: "Marco Aurélio" },
+            { id: 84, cat: "foco", text: "Tudo o que ouvimos é uma opinião, não um fato. Tudo o que vemos é uma perspectiva, não a verdade.", auth: "Marco Aurélio" },
+            { id: 85, cat: "motivacao", text: "Você tem o poder de moldar sua vida. Aja com virtude, e a felicidade virá como consequência.", auth: "Vibração Positiva" },
             
-            // PREMIUM (8 - originais)
-            { id: 51, cat: "premium", text: "💎 A iluminação espiritual é o encontro definitivo da alma com sua paz interior eterna.", auth: "Guru Premium" },
-            { id: 52, cat: "premium", text: "💎 O fluxo de abundância do universo corre livremente através de corações limpos.", auth: "Mestre Ascensionado" },
-            { id: 53, cat: "premium", text: "💎 Sua frequência vibracional atrai tudo o que você é internamente. Eleve-se.", auth: "Lei do Magnetismo" },
-            { id: 54, cat: "premium", text: "💎 Desapegar é a chave mestra para receber o novo. Solte e confie.", auth: "Sabedoria Quântica" },
-            { id: 55, cat: "premium", text: "💎 O silêncio não é vazio, é o útero onde nascem todas as grandes ideias.", auth: "Mestre Silencioso" },
-            { id: 56, cat: "premium", text: "💎 Você não é uma gota no oceano, você é o oceano inteiro em uma única gota.", auth: "Rumi" },
-            { id: 57, cat: "premium", text: "💎 A gratidão transforma o que temos em suficiente e muito mais.", auth: "Frequência da Luz" },
-            { id: 58, cat: "premium", text: "💎 Desperte para o agora. Toda a paz que você busca já está dentro de você.", auth: "Eckhart Tolle" }
+            // ==================== SUCESSO (15) ====================
+            { id: 86, cat: "motivacao", text: "O sucesso é ir de fracasso em fracasso sem perder o entusiasmo.", auth: "Winston Churchill" },
+            { id: 87, cat: "motivacao", text: "Para ter sucesso, primeiro você deve acreditar que é capaz.", auth: "Vibração Positiva" },
+            { id: 88, cat: "motivacao", text: "O segredo do sucesso é a constância do propósito.", auth: "Benjamin Disraeli" },
+            { id: 89, cat: "motivacao", text: "O sucesso não é final, o fracasso não é fatal: o que conta é a coragem de continuar.", auth: "Winston Churchill" },
+            { id: 90, cat: "motivacao", text: "Aja como se o que você faz faz diferença. Porque faz.", auth: "William James" },
+            { id: 91, cat: "motivacao", text: "O sucesso nasce do querer, da determinação e da persistência em se chegar a um objetivo.", auth: "Vibração Positiva" },
+            { id: 92, cat: "motivacao", text: "Grandes mentes discutem ideias. Mentes medíocres discutem eventos. Mentes pequenas discutem pessoas.", auth: "Eleanor Roosevelt" },
+            { id: 93, cat: "motivacao", text: "Nada no mundo pode vencer a persistência.", auth: "Thomas Edison" },
+            { id: 94, cat: "motivacao", text: "Sucesso é a soma de pequenos esforços repetidos dia após dia.", auth: "Robert Collier" },
+            { id: 95, cat: "motivacao", text: "Não conte os dias, faça os dias contarem.", auth: "Muhammad Ali" },
+            { id: 96, cat: "motivacao", text: "A diferença entre o impossível e o possível está na determinação de uma pessoa.", auth: "Tommy Lasorda" },
+            { id: 97, cat: "motivacao", text: "Se você quer algo que nunca teve, precisa fazer algo que nunca fez.", auth: "Vibração Positiva" },
+            { id: 98, cat: "motivacao", text: "Planeje o trabalho, trabalhe o plano. Organização é a chave do sucesso.", auth: "Vibração Positiva" },
+            { id: 99, cat: "motivacao", text: "Sucesso é aprender a ir de fracasso em fracasso sem desistir.", auth: "Winston Churchill" },
+            { id: 100, cat: "motivacao", text: "O sucesso geralmente chega para quem está muito ocupado para procurar por ele.", auth: "Henry David Thoreau" },
+            
+            // ==================== PREMIUM (18 - incluindo +10 novas) ====================
+            { id: 101, cat: "premium", text: "💎 A iluminação espiritual é o encontro definitivo da alma com sua paz interior eterna.", auth: "Guru Premium" },
+            { id: 102, cat: "premium", text: "💎 O fluxo de abundância do universo corre livremente através de corações limpos.", auth: "Mestre Ascensionado" },
+            { id: 103, cat: "premium", text: "💎 Sua frequência vibracional atrai tudo o que você é internamente. Eleve-se.", auth: "Lei do Magnetismo" },
+            { id: 104, cat: "premium", text: "💎 Desapegar é a chave mestra para receber o novo. Solte e confie.", auth: "Sabedoria Quântica" },
+            { id: 105, cat: "premium", text: "💎 O silêncio não é vazio, é o útero onde nascem todas as grandes ideias.", auth: "Mestre Silencioso" },
+            { id: 106, cat: "premium", text: "💎 Você não é uma gota no oceano, você é o oceano inteiro em uma única gota.", auth: "Rumi" },
+            { id: 107, cat: "premium", text: "💎 A gratidão transforma o que temos em suficiente e muito mais.", auth: "Frequência da Luz" },
+            { id: 108, cat: "premium", text: "💎 Desperte para o agora. Toda a paz que você busca já está dentro de você.", auth: "Eckhart Tolle" },
+            { id: 109, cat: "premium", text: "💎 A verdadeira riqueza não está no que você tem, mas no que você é.", auth: "Vibração Premium" },
+            { id: 110, cat: "premium", text: "💎 Permita-se brilhar. O mundo precisa da sua luz única.", auth: "Mestre Kuthumi" },
+            { id: 111, cat: "premium", text: "💎 O universo não te dá o que você pede, mas o que você é. Transforme-se.", auth: "Lei da Atração" },
+            { id: 112, cat: "premium", text: "💎 A quietude da mente é o assento da alma. Medite diariamente para ouvir sua voz interior.", auth: "Vibração Positiva" },
+            { id: 113, cat: "premium", text: "💎 A única jornada espiritual que importa é a de volta a si mesmo.", auth: "Sabedoria Interior" },
+            { id: 114, cat: "premium", text: "💎 O segredo da manifestação: sinta a alegria do pedido realizado antes mesmo dele acontecer.", auth: "Abraham Hicks" },
+            { id: 115, cat: "premium", text: "💎 Você é um ser infinito vivendo uma experiência finita. Viva com coragem.", auth: "Consciência Cósmica" },
+            { id: 116, cat: "premium", text: "💎 A energia do amor é a força mais poderosa do universo. Cure através dela.", auth: "Vibração Divina" },
+            { id: 117, cat: "premium", text: "💎 A sincronicidade é o universo te guiando. Preste atenção aos sinais.", auth: "Carl Jung" },
+            { id: 118, cat: "premium", text: "💎 Para mudar seu mundo, primeiro mude o que há dentro de você.", auth: "Vibração Premium" }
         ];
 
         const afirmacoesSwipe = [
@@ -1063,6 +1107,7 @@
         // --- INICIALIZAÇÃO ---
         window.addEventListener('DOMContentLoaded', () => {
             configurarRelogio();
+            buscarTemperatura();
             atualizarLayoutGamificacao();
             gerarMissaoDiaria();
             atualizarFiltrosBloqueados();
@@ -1096,6 +1141,48 @@
                 let d = new Date();
                 r.innerText = d.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
             }, 1000);
+        }
+
+        // Função para buscar temperatura (Open-Meteo - gratuita, sem API Key)
+        function buscarTemperatura() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function(posicao) {
+                    const lat = posicao.coords.latitude;
+                    const lon = posicao.coords.longitude;
+                    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.current_weather) {
+                                const temp = Math.round(data.current_weather.temperature);
+                                document.getElementById('temperatura').innerHTML = `${temp}°C`;
+                            } else {
+                                document.getElementById('temperatura').innerHTML = "--°C";
+                            }
+                        })
+                        .catch(() => {
+                            document.getElementById('temperatura').innerHTML = "--°C";
+                        });
+                }, function() {
+                    document.getElementById('temperatura').innerHTML = "--°C";
+                });
+            } else {
+                document.getElementById('temperatura').innerHTML = "--°C";
+            }
+        }
+
+        // Função para compartilhar o aplicativo (fallback para Web Share API)
+        function compartilharApp() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Vibração Positiva',
+                    text: 'Descubra um app que vai elevar sua frequência e trazer paz para o seu dia!',
+                    url: window.location.href
+                }).catch(() => showToast("Obrigado por compartilhar!"));
+            } else {
+                // Fallback: copia o link
+                navigator.clipboard.writeText(window.location.href);
+                showToast("Link copiado! Compartilhe com seus amigos.");
+            }
         }
 
         // --- FILTROS E CONTEÚDO ---
@@ -1721,26 +1808,6 @@
 
         function atualizarEstatisticas(){
             localStorage.setItem('vp_stats', JSON.stringify(estatisticas));
-        }
-
-        function ativarModoCrise(){
-            mudarAba('respiracao');
-            document.body.style.transition = '0.5s';
-            document.body.style.filter = 'brightness(0.85)';
-            let frase = document.getElementById('frase');
-            frase.innerText = '"Você não precisa carregar tudo sozinho. Respire devagar. Vai passar."';
-            showToast('🫂 Respire comigo por alguns segundos');
-            let circle = document.getElementById('circulo-respiracao');
-            circle.classList.add('expand');
-            setTimeout(()=>{
-                document.body.style.filter = 'brightness(1)';
-            },15000);
-        }
-
-        function ativarModoSono(){
-            document.body.style.transition = '1s';
-            document.body.style.background = '#000';
-            showToast('🌙 Boa noite... sua mente merece descanso');
         }
 
         // Recompensa diária
